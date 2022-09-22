@@ -1,23 +1,45 @@
 package pro.sky.java.course2.calculator;
 
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
+@RequestMapping(value = "/calculator")
 public class CalculatorController {
-    public Integer plus(Integer x, Integer y) {
-        return x + y;
+    private CalculatorService calculatorService;
+
+    @GetMapping
+    public String hello() {
+        return "Добро пожаловать в калькулятор!";
     }
 
-    public int minus(Integer x, Integer y) {
-        return x - y;
+    @GetMapping(path = "/plus")
+    public String plus(@RequestParam(name = "num1", required = false) Integer x, @RequestParam(name = "num2", required = false) Integer y) {
+        calculatorService.checkNull(x, y);
+        int plus = calculatorService.plus(x, y);
+        return x + "+" + y + "=" + plus;
     }
 
-    public int multiply(Integer x, Integer y) {
-        return x * y;
+    @GetMapping(path = "/minus")
+    public String minus(@RequestParam(name = "num1", required = false) Integer x, @RequestParam(name = "num2", required = false) Integer y) {
+        calculatorService.checkNull(x, y);
+        int minus = calculatorService.minus(x, y);
+        return x + "-" + y + "=" + minus;
     }
 
-    public int divide(Integer x, Integer y) {
-        return x / y;
+    @GetMapping(path = "/multiply")
+    public String multiply(@RequestParam(name = "num1", required = false) Integer x, @RequestParam(name = "num2", required = false) Integer y) {
+        calculatorService.checkNull(x, y);
+        int multiply = calculatorService.multiply(x, y);
+        return x + "*" + y + "=" + multiply;
     }
 
+    @GetMapping(path = "/divide")
+    public String divide(@RequestParam(name = "num1", required = false) Integer x, @RequestParam(name = "num2", required = false) Integer y) {
+        if (y == 0) {
+            return "На ноль делить нельзя!";
+        }
+        calculatorService.checkNull(x, y);
+        double divide = calculatorService.divide(x, y);
+        return x + "/" + y + "=" + divide;
+    }
 }

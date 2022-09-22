@@ -1,61 +1,30 @@
 package pro.sky.java.course2.calculator;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import pro.sky.java.course2.calculator.CalculatorController;
+import org.springframework.stereotype.Service;
 
-@RestController
-@RequestMapping(value = "/calculator")
+@Service
 public class CalculatorService {
-    private CalculatorController calculatorController;
-
-    @GetMapping
-    public String hello() {
-        return "Добро пожаловать в калькулятор!";
+    public Integer plus(Integer x, Integer y) {
+        return x + y;
     }
 
-    @GetMapping(path = "/plus")
-    public String plus(@RequestParam(name = "num1", required = false) Integer x,
-                       @RequestParam(name = "num2", required = false) Integer y) {
-        if (y == null || x == null) {
-            return "Проверьте все параметры";
-        }
-        int plus = calculatorController.plus(x, y);
-        return x + "+" + y + "=" + plus;
+    public int minus(Integer x, Integer y) {
+        return x - y;
     }
 
-    @GetMapping(path = "/minus")
-    public String minus(@RequestParam(name = "num1", required = false) Integer x,
-                        @RequestParam(name = "num2", required = false) Integer y) {
-        if (y == null || x == null) {
-            return "Проверьте все параметры";
-        }
-        int minus = calculatorController.minus(x, y);
-        return x + "-" + y + "=" + minus;
+    public int multiply(Integer x, Integer y) {
+        return x * y;
     }
 
-    @GetMapping(path = "/multiply")
-    public String multiply(@RequestParam(name = "num1", required = false) Integer x,
-                           @RequestParam(name = "num2", required = false) Integer y) {
-        if (y == null || x == null) {
-            return "Проверьте все параметры";
-        }
-        int multiply = calculatorController.multiply(x, y);
-        return x + "*" + y + "=" + multiply;
+    public int divide(Integer x, Integer y) {
+
+        return x / y;
     }
 
-    @GetMapping(path = "/divide")
-    public String divide(@RequestParam(name = "num1", required = false) Integer x,
-                         @RequestParam(name = "num2", required = false) Integer y) {
-        if (y == 0) {
-            return "На ноль делить нельзя!";
+    public String checkNull(Integer x, Integer y) {
+        if (x == null || y == null) {
         }
-        if (y == null || x == null) {
-            return "Проверьте все параметры";
-        }
-        double divide = calculatorController.divide(x, y);
-        return x + "/" + y + "=" + divide;
+        return "проверьте все значения";
     }
+
 }
